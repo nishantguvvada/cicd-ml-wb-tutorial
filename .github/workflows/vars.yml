@@ -16,3 +16,10 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Printing Payload
+        run: |
+          import os
+          print(os.getenv('PAYLOAD'))
+        shell: python
+        env:
+          PAYLOAD: ${{ toJSON(github.event) }}
