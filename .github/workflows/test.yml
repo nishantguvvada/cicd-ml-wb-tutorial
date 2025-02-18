@@ -1,0 +1,20 @@
+name: Smoke Test Workflow
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        def add_numbers(a, b):
+          return a + b
+        assertEqual(add_numbers(2, 3), 5)
+        assertEqual(add_numbers(-1, 1), 0)
+        assertEqual(add_numbers(0, 0), 0)
+        assertEqual(add_numbers(2.5, 3.5), 6.0)
+      shell: python
