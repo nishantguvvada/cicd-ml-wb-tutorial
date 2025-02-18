@@ -19,7 +19,7 @@ jobs:
 
     - name: filter for magic comment
       id: filter
-      if: (github.event.issue.pull_request != null) && contains(github.event.comment.body, env.MAGIC_KEYWORD)
+      if: (github.event.issue.pull_request != null) && contains(github.event.comment.body, '\bug')
       run: echo "magic comment detected"
       
     - name: Parse value from the magic command
@@ -58,6 +58,9 @@ jobs:
       env:
         MAGIC_VAL: "${{ steps.get-magic-value.outputs.MAGIC_VAL }}"
         
+    - name: install dependencies
+      run: pip install ghapi 
+      
     - name: Add label with the GitHub API
       shell: python
       run: |
