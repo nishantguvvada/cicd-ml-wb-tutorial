@@ -19,7 +19,7 @@ jobs:
 
     - name: filter for magic comment
       id: filter
-      if: contains(github.event.comment.body, env.MAGIC_KEYWORD)
+      if: (github.event.issue.pull_request != null) && contains(github.event.comment.body, env.MAGIC_KEYWORD)
       run: echo "magic comment detected"
       
     - name: Parse value from the magic command
@@ -57,18 +57,17 @@ jobs:
             })
       env:
         MAGIC_VAL: "${{ steps.get-magic-value.outputs.MAGIC_VAL }}"
+        
     - name: Add label with the GitHub API
-      uses: actions/github-script@v6
-      if: steps.get-magic-value.outcome == 'success' 
-      with:
-        script: |
-           github.rest.issues.createLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              name: MAGIC_VAL
-              description: 'Something is not working'
-              color: 'f29513'
-            })
+      shell: python
+      run: |
+        import os
+        from ghapi.core import GhApi
+        owner, repo = os.environ['REPO'].split('/')
+        api = GhApi(owner=owner, repo=repo)
+        api.issues.add_labels(issue_number=os.environ['NUMBER'], labels=['bug'])
       env:
-        MAGIC_VAL: "${{ steps.get-magic-value.outputs.MAGIC_VAL }}"
+        NUMBER: ${{ github.event.issues.number }}
+        REPO: ${{ github.repository }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
