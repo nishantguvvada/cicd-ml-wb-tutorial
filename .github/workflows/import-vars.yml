@@ -1,5 +1,7 @@
 name: Use variables between steps
-on: [push]
+on: 
+  # push:
+  workflow_dispatch:
 
 jobs:
   import-vars:
