@@ -13,8 +13,8 @@ jobs:
     - run: |
         def add_numbers(a, b):
           return a + b
-        assertEqual(add_numbers(2, 3), 5)
-        assertEqual(add_numbers(-1, 1), 0)
-        assertEqual(add_numbers(0, 0), 0)
-        assertEqual(add_numbers(2.5, 3.5), 6.0)
+        assert add_numbers(2, 3) == 5, "Error from assertion"
+        assert add_numbers(1, -1) == 0, "Error from assertion"
+        assert add_numbers(0, 0) == 0, "Error from assertion"
+        assert add_numbers(2.5, 3.5) == 6.0, "Error from assertion"
       shell: python
