@@ -1,6 +1,8 @@
 name: GitHub Actions Demo
 
-on: [push]
+on: 
+  # [push]
+  workflow_dispatch:
 jobs:
   my-first-job:
     runs-on: ubuntu-latest
