@@ -1,5 +1,8 @@
 name: ghapi
-on: pull_request
+on:
+  label:
+    types:
+      - created
 permissions:
   contents: read
   issues: write
@@ -22,7 +25,7 @@ jobs:
         from ghapi.core import GhApi
         owner,repo = os.environ['REPO'].split('/')
         api = GhApi(owner=owner, repo=repo)
-        api.issues.create_comment(os.environ['NUMBER'], "Hi! I'm making a comment with `ghapi` in Actions!")
+        api.issues.create_comment(os.environ['NUMBER'], "Hi! This is tagged as ${{ github.event.label.name }}!")
       env:
         NUMBER: ${{ github.event.number }} 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
