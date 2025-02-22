@@ -1,4 +1,4 @@
-name: Print Payload
+name: Favorite PR
 on:
   issue_comment:
   workflow_dispatch:
@@ -8,8 +8,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  print-payload:
-    if: (github.event.issue.pull_request != null) && contains(github.event.comment.body, '/print')
+  favorite-pr:
+    if: (github.event.issue.pull_request != null) && contains(github.event.comment.body, '/fav')
     runs-on: ubuntu-latest
     steps:
     - name: see payload # this step is for debugging purposes only, so you can see the payload. 
@@ -27,7 +27,7 @@ jobs:
         from ghapi.core import GhApi
         owner,repo = os.environ['REPO'].split('/')
         api = GhApi(owner=owner, repo=repo)
-        api.issues.add_labels(issue_number=os.environ['NUMBER'], labels=['bug'])
+        api.issues.add_labels(issue_number=os.environ['NUMBER'], labels=['fav'])
       env:
         NUMBER: ${{ github.event.issue.number }} 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
