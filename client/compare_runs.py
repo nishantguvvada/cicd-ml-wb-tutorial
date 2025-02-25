@@ -31,7 +31,7 @@ def compare_runs(entity='nishant-guvvada-rackspace-technology',
                        description=f"A comparison of runs, the baseline run name is {baseline.name}") 
 
     pg = wr.PanelGrid(
-        runsets=[wr.Runset(entity, project, "Run Comparison").filters(f"ID in ['{run_id}', '{baseline.id}']")],
+        runsets=[wr.Runset(entity, project, "Run Comparison").query(f"ID in ['{run_id}', '{baseline.id}']")],
         panels=[wr.RunComparer(diff_only='split', layout={'w': 24, 'h': 15}),]
     )
     report.blocks = report.blocks[:1] + [pg] + report.blocks[1:]
