@@ -1,3 +1,3 @@
 # W&B CI/CD pipeline for ML
 
-MLops Test Successfull!
+MLops Test Successfully completed!
